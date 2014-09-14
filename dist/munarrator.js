@@ -24,48 +24,6 @@ var MuNarrator = (function(){
 
 (function(MuNarrator){
 "use strict";
-  /**
-  * @param {string} name
-  * @constructor
-  */
-  MuNarrator.Action = function(name){
-    this.running = false;
-    this.microactions = [];
-    this.currmicroactionid = -1;
-  };
-
-
-  MuNarrator.Action.prototype.add = function(microaction){
-    this.microactions.push(microaction);
-  };
-
-
-  MuNarrator.Action.prototype.start = function(){
-    this.running = true;
-    this.currmicroactionid = 0;
-
-  };
-
-
-  MuNarrator.Action.prototype.update = function(){
-    if(!this.running) return;
-    var micro = this.microactions[this.currmicroactionid];
-    micro.update();
-    if(micro.isDone()){
-      this.currmicroactionid++;
-      if(this.currmicroactionid >= this.microactions.length){
-        this.running = false;
-        //reset all the microactions so we are ready to execute the action again.
-        this.microactions.forEach(function(microaction){
-          microaction.reset();
-        });
-      }
-    }
-  };
-
-})(MuNarrator);
-(function(MuNarrator){
-"use strict";
 
 
 
@@ -107,14 +65,59 @@ var MuNarrator = (function(){
   MuNarrator.Microaction.newFixedTime = function(name, duration, startcb, endcb){
     var _t = null;
     return new MuNarrator.Microaction(name,
-                                      function(){
-                                        _t = Date.now();
-                                        startcb();
-                                      },
-                                      function(){
-                                        return (Date.now() - _t) >= duration;
-                                      },
-                                      endcb);
+      function(){
+        _t = Date.now();
+        startcb();
+      },
+      function(){
+        return (Date.now() - _t) >= duration;
+      },
+      endcb);
+  };
+
+
+  /**
+  * factory method to create a sequencial execution of microactions.
+  * this microaction will begin processing the array of microactions in order, and will
+  * finish only when the last one in the array is finished.
+  */
+  MuNarrator.Microaction.newSequential = function(name, microactions){
+    var current = 0;
+    return new MuNarrator.Microaction(name,
+      function(){
+        microactions[current].update();
+      },
+      function(){
+        microactions[current].update();
+        if(microactions[current].isDone()){
+          current++;
+          if(current >= microactions.length){
+            this.status = "finished";
+            return true; //signal for termination
+          }else{
+            return false;
+          }
+        }
+      },
+      null
+    );
+  };
+
+
+  /**
+  * factory method to create a concurrent microaction
+  * @param micros array of microactions to execute in parallel. it will finish once all of them are finished.
+  */
+  MuNarrator.Microaction.newConcurrent = function(name, micros){
+
+  };
+
+
+ /**
+  * factory method to create a secuential microaction
+  * @param micros array of microactions to execute secuentially. it will finish once the last of the are finished.
+  */
+  MuNarrator.Microaction.newConcurrent = function(name, micros){
   };
 
 
