@@ -1,6 +1,14 @@
 var MuNarrator = (function(){
+  "using strict";
 
-  var Narrator = function(){
+  var MuNarrator = {}:
+
+
+  /**
+  * Narrator: top level class
+  * @class
+  */
+  MuNarrator.Narrator = function(){
   };
 
   Narrator.prototype.start = function(){
@@ -8,6 +16,11 @@ var MuNarrator = (function(){
 
   Narrator.prototype.update = function(dt){
   };
+
+
+
+  return MuNarrator;
+
 })();
 
 

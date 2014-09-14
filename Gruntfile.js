@@ -13,6 +13,7 @@ module.exports = function(grunt) {
           'src/narrator.js',
           'src/stage.js',
           'src/action.js',
+          'src/microaction.js',
           'src/microactions/*.js'
         ],
         // the location of the resulting JS file
