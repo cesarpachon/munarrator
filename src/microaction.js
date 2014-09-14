@@ -1,10 +1,14 @@
 (function(MuNarrator){
 "use strict";
+
+
+
   /**
-  * base class for all microactions
+  * basic constructor for all microactions. there are some Microaction.newXXX methods
+  * to facilitate specific cases.
   * @param {string} name
   * @param {function} startcb start callback. signature: function()
-  * @param {function} updatecb update callback. signature: function(elapsedtime): bool
+  * @param {function} updatecb update callback. signature: function(elapsedtime): bool. must return true if finished.
   * @param {function} donecb done callback. signature: function()
   * @constructor
   */
@@ -15,6 +19,39 @@
     this.reset();
   };
 
+  /**
+  * factory method to create a single step microaction.
+  * @param {string} name
+  * @param updatecb {function} empty callback to trigger single behaviour
+  * @return {object} microaction
+  */
+  MuNarrator.Microaction.newSingleStep = function(name, updatecb){
+    return new MuNarrator.Microaction(name,
+                                      null,
+                                      updatecb,
+                                      null);
+  };
+
+
+  /**
+  * factory method to create a fixed time  microaction.
+  * the endcb callback will be invoked after passed 'duration' miliseconds
+  * @param duration {long} milliseconds
+  */
+  MuNarrator.Microaction.newFixedTime = function(name, duration, startcb, endcb){
+    var _t = null;
+    return new MuNarrator.Microaction(name,
+                                      function(){
+                                        _t = Date.now();
+                                        startcb();
+                                      },
+                                      function(){
+                                        return (Date.now() - _t) >= duration;
+                                      },
+                                      endcb);
+  };
+
+
 
   MuNarrator.Microaction.prototype.isDone = function(){
     return this.status === "finished";
@@ -22,12 +59,12 @@
 
   MuNarrator.Microaction.prototype.update = function(){
     if(this.status === "idle"){
-      this.startcb();
+      if(this.startcb) this.startcb();
       this.status = "running";
     }else if(this.status === "running"){
       if(this.updatecb()){
         this.status = "finished";
-        this.donecb();
+        if(this.donecb) this.donecb();
       }
     }
   };
