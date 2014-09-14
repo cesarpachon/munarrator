@@ -11,7 +11,6 @@ module.exports = function(grunt) {
         // the files to concatenate
         src: [
           'src/narrator.js',
-          'src/stage.js',
           'src/microaction.js',
           'src/microactions/*.js'
         ],
