@@ -1,5 +1,5 @@
+"use strict";
 var MuNarrator = (function(){
-  "using strict";
 
   var MuNarrator = {};
 

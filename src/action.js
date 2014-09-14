@@ -6,9 +6,6 @@
   */
   MuNarrator.Action = function(name){
     this.running = false;
-    this.startcb = startcb;
-    this.updatecb = updatecb;
-    this.donecb = donecb;
     this.microactions = [];
     this.currmicroactionid = -1;
   };
