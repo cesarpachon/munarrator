@@ -108,18 +108,29 @@ var MuNarrator = (function(){
   * factory method to create a concurrent microaction
   * @param micros array of microactions to execute in parallel. it will finish once all of them are finished.
   */
-  MuNarrator.Microaction.newConcurrent = function(name, micros){
-
+  MuNarrator.Microaction.newConcurrent = function(name, microactions){
+      return new MuNarrator.Microaction(name,
+        function(){
+          microactions.forEach(function(micro){
+            micro.update();
+          });
+        },
+        function(){
+          var counter = 0;
+          microactions.forEach(function(micro){
+            micro.update();
+            counter += micro.isDone()?1:0;
+          });
+          if(counter >= microactions.length){
+            this.status = "finished";
+            return true; //signal for termination
+          }else{
+            return false;
+          }
+        },
+        null
+      );
   };
-
-
- /**
-  * factory method to create a secuential microaction
-  * @param micros array of microactions to execute secuentially. it will finish once the last of the are finished.
-  */
-  MuNarrator.Microaction.newConcurrent = function(name, micros){
-  };
-
 
 
   MuNarrator.Microaction.prototype.isDone = function(){

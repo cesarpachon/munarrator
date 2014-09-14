@@ -109,15 +109,6 @@
   };
 
 
- /**
-  * factory method to create a secuential microaction
-  * @param micros array of microactions to execute secuentially. it will finish once the last of the are finished.
-  */
-  MuNarrator.Microaction.newConcurrent = function(name, micros){
-  };
-
-
-
   MuNarrator.Microaction.prototype.isDone = function(){
     return this.status === "finished";
   };

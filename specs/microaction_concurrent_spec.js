@@ -1,5 +1,5 @@
 "use strict";
-describe("microaction_sequential", function(){
+describe("microaction_concurrent", function(){
 
   it("should process all the microactions", function(){
 
@@ -21,7 +21,7 @@ describe("microaction_sequential", function(){
     };
 
 
-    var micro = MuNarrator.Microaction.newSequential("action",
+    var micro = MuNarrator.Microaction.newConcurrent("action",
     [
     new MuNarrator.Microaction("test1", callback_start, callback_update, callback_finished),
     new MuNarrator.Microaction("test2", callback_start, callback_update, callback_finished),
@@ -30,42 +30,14 @@ describe("microaction_sequential", function(){
 
     expect(micro.status).toBe("idle");
 
-    //initializes test1
+    //initializes all the tests
     micro.update();
-    expect(counter_start).toBe(1);
+    expect(counter_start).toBe(3);
     expect(counter_update).toBe(0);
     expect(counter_finished).toBe(0);
     expect(micro.status).toBe("running");
 
-    //finishes test1
-    micro.update();
-    expect(counter_start).toBe(1);
-    expect(counter_update).toBe(1);
-    expect(counter_finished).toBe(1);
-    expect(micro.status).toBe("running");
-
-    //starts test 2
-    micro.update();
-    expect(counter_start).toBe(2);
-    expect(counter_update).toBe(1);
-    expect(counter_finished).toBe(1);
-    expect(micro.status).toBe("running");
-
-    //finishes test 2
-    micro.update();
-    expect(counter_start).toBe(2);
-    expect(counter_update).toBe(2);
-    expect(counter_finished).toBe(2);
-    expect(micro.status).toBe("running");
-
-    //starts test 3
-    micro.update();
-    expect(counter_start).toBe(3);
-    expect(counter_update).toBe(2);
-    expect(counter_finished).toBe(2);
-    expect(micro.status).toBe("running");
-
-    //finishes test 3
+    //finishes all the tests
     micro.update();
     expect(counter_start).toBe(3);
     expect(counter_update).toBe(3);
