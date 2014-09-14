@@ -14,26 +14,30 @@
   };
 
 
-  MuNarrator.Action.addMicroaction = function(microaction){
+  MuNarrator.Action.prototype.addMicroaction = function(microaction){
     this.microactions.push(microaction);
   };
 
 
-  MuNarrator.Action.start = function(){
+  MuNarrator.Action.prototype.start = function(){
     this.running = true;
     this.currmicroactionid = 0;
 
   };
 
 
-  MuNarrator.Action.update = function(){
+  MuNarrator.Action.prototype.update = function(){
     if(!this.running) return;
     var micro = this.microactions[this.currmicroactionid];
     micro.update();
     if(micro.isDone()){
       this.currmicroactionid++;
-      if(this.currmicroactionid>= this.microactions.length){
+      if(this.currmicroactionid >= this.microactions.length){
         this.running = false;
+        //reset all the microactions so we are ready to execute the action again.
+        this.microactions.forEach(microaction){
+          microaction.reset();
+        });
       }
     }
   };

@@ -9,18 +9,18 @@
   * @constructor
   */
   MuNarrator.Microaction = function(name, startcb, updatecb, donecb){
-    this.status = "started"; //running, finished
     this.startcb = startcb;
     this.updatecb = updatecb;
     this.donecb = donecb;
+    this.reset();
   };
 
 
-  MuNarrator.Microaction.isDone = function(){
+  MuNarrator.Microaction.prototype.isDone = function(){
     return this.status === "finished";
   };
 
-  MuNarrator.Microaction.update = function(){
+  MuNarrator.Microaction.prototype.update = function(){
     if(this.status === "started"){
       this.startcb();
       this.status = "running";
@@ -30,6 +30,10 @@
         this.donecb();
       }
     }
+  };
+
+  MuNarrator.Microaction.prototype.reset = function(){
+    this.status = "started"; //running, finished
   };
 
 })(MuNarrator);
