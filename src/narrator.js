@@ -11,13 +11,11 @@ var MuNarrator = (function(){
   MuNarrator.Narrator = function(){
   };
 
-  Narrator.prototype.start = function(){
+  MuNarrator.Narrator.prototype.start = function(){
   };
 
-  Narrator.prototype.update = function(dt){
+  MuNarrator.Narrator.prototype.update = function(dt){
   };
-
-
 
   return MuNarrator;
 
