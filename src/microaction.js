@@ -21,7 +21,7 @@
   };
 
   MuNarrator.Microaction.prototype.update = function(){
-    if(this.status === "started"){
+    if(this.status === "idle"){
       this.startcb();
       this.status = "running";
     }else if(this.status === "running"){
@@ -33,7 +33,7 @@
   };
 
   MuNarrator.Microaction.prototype.reset = function(){
-    this.status = "started"; //running, finished
+    this.status = "idle"; //running, finished
   };
 
 })(MuNarrator);

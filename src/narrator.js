@@ -1,7 +1,7 @@
 var MuNarrator = (function(){
   "using strict";
 
-  var MuNarrator = {}:
+  var MuNarrator = {};
 
 
   /**

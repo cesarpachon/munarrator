@@ -35,7 +35,7 @@
       if(this.currmicroactionid >= this.microactions.length){
         this.running = false;
         //reset all the microactions so we are ready to execute the action again.
-        this.microactions.forEach(microaction){
+        this.microactions.forEach(function(microaction){
           microaction.reset();
         });
       }
