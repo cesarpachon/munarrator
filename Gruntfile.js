@@ -79,6 +79,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['jasmine']);
   grunt.registerTask('default', ['watch']);
-  grunt.registerTask('make', ['jshint', 'concat:dist', 'copy:dist']);
+  grunt.registerTask('make', ['jshint', 'jasmine', 'concat:dist', 'copy:dist']);
   grunt.registerTask('doc', ['jsdoc:dist']);
 };

@@ -40,7 +40,20 @@ describe("action", function(){
 
     expect(action.running).toBe(false);
 
-
   });
+
+
+  it("should invoke newSingle microaction just once", function(done){
+    var action = new MuNarrator.Action("action");
+    action.add(MuNarrator.newSingleStep("test1", done));
+    action.update();
+    action.update();
+  });
+
+
+  it("should invoke newFixedTime microaction in the expected time", function(){
+  });
+
+
 
 });
