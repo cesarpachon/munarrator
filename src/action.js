@@ -11,7 +11,7 @@
   };
 
 
-  MuNarrator.Action.prototype.addMicroaction = function(microaction){
+  MuNarrator.Action.prototype.add = function(microaction){
     this.microactions.push(microaction);
   };
 
