@@ -2,7 +2,7 @@ describe("narrator", function(){
 'use strict';
 
   it("should link action with stage when execute is called", function(){
-    MuNarrator.clean();
+    MuNarrator.clear();
     var counter = 0;
     MuNarrator.addAction("action1",
                          MuNarrator.Microaction.newSingleStep("action1",

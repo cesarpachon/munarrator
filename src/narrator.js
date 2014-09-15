@@ -89,7 +89,7 @@ var MuNarrator = (function(){
   /**
   * delete all registered stages and microactions
   */
-  MuNarrator.clean = function(){
+  MuNarrator.clear = function(){
      _actions = {};
      _stages = {};
      _currstage = null;
