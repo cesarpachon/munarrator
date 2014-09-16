@@ -80,8 +80,10 @@ var MuNarrator = (function(){
   MuNarrator.execute = function(action_name, force){
     if(_currstage){
       if(!_currstage.action || force){
-        _currstage.action = _actions[action_name];
-        _currstage.action.reset();
+        if(_actions[action_name]){
+          _currstage.action = _actions[action_name];
+          _currstage.action.reset();
+        }
       }
     }
   };

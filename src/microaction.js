@@ -28,7 +28,10 @@
   MuNarrator.Microaction.newSingleStep = function(name, updatecb){
     return new MuNarrator.Microaction(name,
                                       null,
-                                      updatecb,
+                                      function(){
+                                        updatecb();
+                                        return true;
+                                      },
                                       null);
   };
 
@@ -43,7 +46,7 @@
     return new MuNarrator.Microaction(name,
       function(){
         _t = Date.now();
-        startcb();
+        if(startcb) startcb();
       },
       function(){
         return (Date.now() - _t) >= duration;
