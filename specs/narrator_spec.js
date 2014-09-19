@@ -1,9 +1,11 @@
 describe("narrator", function(){
 'use strict';
 
+  var counter, stage1;
+
   it("should link action with stage when execute is called", function(){
     MuNarrator.clear();
-    var counter = 0;
+    counter = 0;
     MuNarrator.addAction("action1",
                          MuNarrator.Microaction.newSingleStep("action1",
                           function(){
@@ -11,7 +13,7 @@ describe("narrator", function(){
                           }));
 
 
-    var stage1 = {
+    stage1 = {
       enter: function(){
         MuNarrator.execute("action1");
       }
@@ -37,6 +39,20 @@ describe("narrator", function(){
     MuNarrator.update();
     expect(counter).toBe(1);
     expect(stage1.action).toBeFalsy();
+  });
+
+  it("should sent messages to the active stage", function(){
+    MuNarrator.clear();
+    counter = 0;
+    stage1 = {
+      on_test: function(params){
+        counter++;
+      }
+    };
+    MuNarrator.addStage("stage1", stage1);
+    MuNarrator.setActiveStage("stage1");
+    MuNarrator.send("test");
+    expect(counter).toBe(1);
   });
 
 });

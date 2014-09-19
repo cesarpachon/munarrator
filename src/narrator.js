@@ -101,6 +101,17 @@ var MuNarrator = (function(){
      _currstage = null;
   };
 
+  /**
+  * send a message to the current stage.
+  * a stage is known to accept a message if has a method named "on_XXX" where XXX is the value of the param "msg".
+  * @params msg {String} name of the message.
+  */
+  MuNarrator.send = function(msg, args){
+    if(_currstage && _currstage["on_"+msg]){
+      _currstage["on_"+msg](args);
+    }
+  };
+
 
   return MuNarrator;
 
