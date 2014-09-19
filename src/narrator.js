@@ -22,7 +22,9 @@ var MuNarrator = (function(){
   */
   MuNarrator.update = function(){
     if(_currstage && _currstage.action)
-        _currstage.action.update();
+        if(_currstage.action.update()){
+          _currstage.action = null;
+        }
   };
 
   /**
@@ -64,11 +66,13 @@ var MuNarrator = (function(){
     if(!nextstage){
       throw 'unexisting_stage';
     }
-    if(_currstage){
-      _currstage('exit');
+    if(_currstage && _currstage['exit']){
+      _currstage['exit']();
     }
     _currstage = nextstage;
-    _currstage('enter');
+    if(_currstage && _currstage['enter']){
+      _currstage['enter']();
+    }
   };
 
 

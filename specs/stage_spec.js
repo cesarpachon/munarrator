@@ -5,11 +5,11 @@ describe("stage", function(){
     var numenter = 0;
 
 
-    var stage = function(msg, params){
-      if(msg === "enter"){
+    var stage = {
+      enter: function(){
         numenter++;
-      }
-      else if(msg === "exit"){
+      },
+      exit: function(){
         numexit++;
       }
     };
@@ -24,6 +24,12 @@ describe("stage", function(){
     MuNarrator.setActiveStage("stage2");
     expect(numenter).toBe(2);
     expect(numexit).toBe(1);
+
+  });
+
+  it("must invoke the update function", function(){
+
+
 
   });
 

@@ -120,12 +120,15 @@
     if(this.status === "idle"){
       if(this.startcb) this.startcb();
       this.status = "running";
+      return false;
     }else if(this.status === "running"){
       if(this.updatecb()){
         this.status = "finished";
         if(this.donecb) this.donecb();
+        return true;
       }
     }
+    return false;
   };
 
   MuNarrator.Microaction.prototype.reset = function(){
